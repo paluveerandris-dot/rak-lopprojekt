@@ -1,0 +1,18 @@
+pm_api_url          = "https://PROXMOX_IP:8006/api2/json"
+pm_api_token_id     = "USER@pam!TOKEN_NAME"
+pm_api_token_secret = "YOUR_TOKEN_SECRET"
+target_node         = "pve"
+template_name       = "ubuntu-2404-cloudinit-template"
+storage             = "local-lvm"
+network_bridge      = "vmbr0"
+ciuser              = "ubuntu"
+ssh_public_key      = "ssh-ed25519 AAAA..."
+
+vm_count = 3
+vm_names = ["web-01", "db-01", "monitor-01"]
+vm_ips   = ["10.0.1.11", "10.0.1.12", "10.0.1.13"]
+gateway  = "10.0.1.1"
+
+cpu_cores = 2
+memory    = 2048
+disk_size = "20G"

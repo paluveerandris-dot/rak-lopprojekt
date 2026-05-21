@@ -1,0 +1,8 @@
+app_name: studentapp
+app_dir: /opt/studentapp
+db_name: studentapp
+db_user: studentadmin
+db_pass: studentpass
+db_port: 5432
+web_port: 5000
+gateway: 10.0.1.1

@@ -1,0 +1,25 @@
+---
+- name: Create application directory
+  ansible.builtin.file:
+    path: "{{ app_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: Copy Flask application files
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/../task/"
+    dest: "{{ app_dir }}/"
+    mode: preserve
+
+- name: Deploy web compose file
+  ansible.builtin.template:
+    src: docker-compose.web.yml.j2
+    dest: "{{ app_dir }}/docker-compose.web.yml"
+    mode: "0644"
+
+- name: Build and start web container
+  ansible.builtin.command:
+    cmd: docker compose -f docker-compose.web.yml up -d --build
+    chdir: "{{ app_dir }}"
+  register: web_compose
+  changed_when: true

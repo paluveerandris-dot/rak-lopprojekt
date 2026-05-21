@@ -1,0 +1,12 @@
+# This is the network config written by 'subiquity'
+network:
+  ethernets:
+    ens18:
+      addresses:
+      - {{ ip_addr }}/24
+      gateway4: {{ gateway | default('10.0.1.1') }}
+      nameservers:
+        addresses:
+        - 1.1.1.1
+        - 8.8.8.8
+  version: 2

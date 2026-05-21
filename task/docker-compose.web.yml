@@ -1,0 +1,12 @@
+services:
+  web:
+    build: .
+    container_name: studentapp-web
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      DB_HOST: ${DB_HOST:-db-01}
+      DB_NAME: studentapp
+      DB_USER: studentadmin
+      DB_PASS: studentpass

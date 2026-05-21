@@ -1,0 +1,30 @@
+---
+- name: Base configuration (network, hostname)
+  hosts: all
+  become: true
+  vars_files:
+    - vars/variables.yml
+  gather_facts: true
+  roles:
+    - netplan
+    - hostname
+
+- name: Database server (PostgreSQL in Docker)
+  hosts: db
+  become: true
+  roles:
+    - docker
+    - postgres_db
+
+- name: Web server (Flask in Docker)
+  hosts: web
+  become: true
+  roles:
+    - docker
+    - web_app
+
+- name: Monitoring server
+  hosts: monitor
+  become: true
+  roles:
+    - monitoring

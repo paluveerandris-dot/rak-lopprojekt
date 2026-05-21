@@ -1,0 +1,10 @@
+---
+- name: Base configuration
+  hosts: all
+  become: true
+  vars_files:
+    - vars/variables.yml
+  gather_facts: true
+  roles:
+    - netplan
+    - hostname

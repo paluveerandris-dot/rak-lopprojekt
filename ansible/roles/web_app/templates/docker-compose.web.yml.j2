@@ -1,0 +1,12 @@
+services:
+  web:
+    build: .
+    container_name: studentapp-web
+    restart: unless-stopped
+    ports:
+      - "{{ web_port }}:5000"
+    environment:
+      DB_HOST: "{{ db_host }}"
+      DB_NAME: "{{ db_name }}"
+      DB_USER: "{{ db_user }}"
+      DB_PASS: "{{ db_pass }}"

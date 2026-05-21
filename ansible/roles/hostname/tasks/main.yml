@@ -1,0 +1,9 @@
+    - name: Set hostname file
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/templates/hostname.j2"
+        dest: /etc/hostname
+        mode: "0644"
+
+    - name: Set system hostname
+      ansible.builtin.hostname:
+        name: "{{ hostname }}"

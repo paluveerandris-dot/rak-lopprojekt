@@ -1,0 +1,39 @@
+---
+- name: Install UFW
+  ansible.builtin.apt:
+    name: ufw
+    state: present
+
+- name: Allow SSH through firewall
+  ansible.builtin.command: ufw allow 22/tcp
+  changed_when: false
+
+- name: Allow PostgreSQL from web server only
+  ansible.builtin.command: >
+    ufw allow from {{ hostvars[groups['web'][0]]['ansible_host'] }}
+    to any port {{ db_port }} proto tcp
+  changed_when: false
+
+- name: Enable UFW (deny incoming by default)
+  ansible.builtin.command: ufw --force enable
+  changed_when: false
+
+- name: Create application directory
+  ansible.builtin.file:
+    path: "{{ app_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: Copy database compose file
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/../task/docker-compose.db.yml"
+    dest: "{{ app_dir }}/docker-compose.db.yml"
+    mode: "0644"
+
+- name: Start PostgreSQL container
+  ansible.builtin.command:
+    cmd: docker compose -f docker-compose.db.yml up -d
+    chdir: "{{ app_dir }}"
+  register: db_compose
+  changed_when: "'Started' in db_compose.stdout or 'Created' in db_compose.stdout or db_compose.rc == 0"
+  failed_when: db_compose.rc != 0

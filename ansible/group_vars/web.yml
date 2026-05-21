@@ -1,0 +1,2 @@
+# Hostname/IP of db-01 — must match inventory [db] host
+db_host: "{{ hostvars['db-01']['ansible_host'] }}"

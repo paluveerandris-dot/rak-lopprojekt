@@ -1,0 +1,11 @@
+---
+- name: Install monitoring utilities
+  ansible.builtin.apt:
+    name:
+      - htop
+      - iotop
+      - net-tools
+      - curl
+      - sysstat
+    state: present
+    update_cache: true
